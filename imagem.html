@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ nome }}{% endblock %}
+
+{% block conteudo %}
+  <p><a href="{{ url_for('index') }}">← Voltar à galeria</a></p>
+  <h1>{{ nome }}</h1>
+  <img src="{{ url_for('static', filename='uploads/' + nome) }}" alt="{{ nome }}" style="max-width: 100%; border-radius: 8px;">
+  <form method="POST" action="{{ url_for('excluir_imagem', nome=nome) }}"
+        onsubmit="return confirm('Excluir esta imagem?');" style="margin-top: 12px;">
+    <button class="perigo" type="submit">Excluir imagem</button>
+  </form>
+{% endblock %}

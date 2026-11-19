@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+  <h1>Enviar imagem</h1>
+
+  <!-- enctype é OBRIGATÓRIO para enviar arquivos -->
+  <form class="upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="imagem" accept="image/*" required>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <h2>Galeria ({{ imagens|length }})</h2>
+  <div class="galeria">
+    {% for img in imagens %}
+      <div class="card">
+        <a href="{{ url_for('ver_imagem', nome=img) }}">
+          <img src="{{ url_for('static', filename='uploads/' + img) }}" alt="{{ img }}">
+        </a>
+        <form method="POST" action="{{ url_for('excluir_imagem', nome=img) }}"
+              onsubmit="return confirm('Excluir esta imagem?');">
+          <button class="perigo" type="submit">Excluir</button>
+        </form>
+      </div>
+    {% else %}
+      <p>Nenhuma imagem ainda. Envie a primeira!</p>
+    {% endfor %}
+  </div>
+{% endblock %}
